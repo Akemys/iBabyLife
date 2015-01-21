@@ -541,15 +541,7 @@ angular.module('starter', ['ionic'])
 		if (checkConnection()) {
 			window.plugins.socialsharing.share(null, null, null, 'https://play.google.com/store/apps/details?id=com.fwstudio.iBabyLife');
 			
-			
-			var myPopup = $ionicPopup.show({
-				title : 'iBabyLife elküldve',
-				template : 'Köszönjük, hogy elküldted az iBabyLife alkalmazást ismerősödnek/barátodnak!',
-				buttons : [{
-					text : '<b>Rendben</b>',
-					type : 'button-pink'
-				}]
-			}); 
+		
 
 		} else {
 			var myPopup = $ionicPopup.show({
@@ -909,8 +901,9 @@ angular.module('starter', ['ionic'])
 				saveToPhotoAlbum: true,
 				sourceType : 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
 				encodingType : 0,
-				targetWidth: 1920,
-  				targetHeight: 1920,
+				quality: 100,
+				targetWidth: 1440,
+  				targetHeight: 1440,
 				correctOrientation : true
 			};
 			// Take picture using device camera and retrieve image as base64-encoded string
@@ -1240,21 +1233,11 @@ angular.module('starter', ['ionic'])
 	}, 100);
 
 	// Call this functions if you need to manually control the slides
-	$scope.slideIndex = 1; 
 	
-	$scope.next = function() {
-		$ionicSlideBoxDelegate.next();
-	};
-
-	$scope.previous = function() {
-		$ionicSlideBoxDelegate.previous();
-	};
-
-	// Called each time the slide changes
-	$scope.slideChanged = function(index) {
-		$scope.slideIndex = index + 1;
-	};
   
+  	
+	
+
 	$scope.aImages = [{
 		'src' : 'tutorial/kep1.png',
 		'msg' : 'A jobb felső sarokban lévő fogaskerekek megnyomásával érheted el a főbb beállitási pontokat.'
@@ -1301,6 +1284,26 @@ angular.module('starter', ['ionic'])
 		'src' : 'tutorial/kep6.png',
 		'msg' : 'Az nyolcadik pontban be tudod állítani, hogy az elkészült képek mentésre kerüljenek a készülékeden is.'
 	}];
+	
+	$scope.slideIndex = 0; 
+	
+	$scope.next = function() {
+		
+		$scope.slideIndex++; 
+		$scope.slide = $scope.aImages[$scope.slideIndex];
+		
+		
+	};
+
+	$scope.previous = function() {
+		$scope.slideIndex--; 
+		$scope.slide = $scope.aImages[$scope.slideIndex];
+		
+		 
+	};	
+	
+	$scope.slide = $scope.aImages[0];
+	
 
     
 }])
@@ -1364,16 +1367,7 @@ function($scope, $rootScope,$ionicLoading,$ionicActionSheet,$ionicScrollDelegate
 					});					
 				
 					window.plugins.socialsharing.shareViaFacebook(null, kepek, null, function() {
-						$ionicLoading.hide();
-						
-						var myPopup = $ionicPopup.show({
-							title : 'Sikeres megosztás',
-							template : 'Ezt az eseményt sikeresen megosztottad a facebook idővonaladon !',
-							buttons : [{
-								text : '<b>Rendben</b>',
-								type : 'button-pink'
-							}]
-						}); 
+						$ionicLoading.hide();					
 
 					}, function(errormsg) {
 						$ionicLoading.hide();
@@ -1397,8 +1391,9 @@ function($scope, $rootScope,$ionicLoading,$ionicActionSheet,$ionicScrollDelegate
 				saveToPhotoAlbum: true,	
 				sourceType : 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
 				encodingType : 0,
-				targetWidth: 1920,
-  				targetHeight: 1920,
+				quality: 100,
+				targetWidth: 1440,
+  				targetHeight: 1440,
 				correctOrientation : true
 			};
 			// Take picture using device camera and retrieve image as base64-encoded string
@@ -2203,8 +2198,9 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 				saveToPhotoAlbum: true,
 				sourceType : 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
 				encodingType : 0,
-				targetWidth: 1920,
-  				targetHeight: 1920,
+				quality: 100,
+				targetWidth: 1440,
+  				targetHeight: 1440,
 				correctOrientation : true
 			};
 			// Take picture using device camera and retrieve image as base64-encoded string
@@ -2598,8 +2594,9 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 			saveToPhotoAlbum: true, 
 			sourceType : 1, // 0:Photo Library, 1=Camera, 2=Saved Photo Album
 			encodingType : 0,
-			targetWidth: 1920,
-  			targetHeight: 1920,
+			quality: 100,
+			targetWidth: 1440, 
+  			targetHeight: 1440,
 			correctOrientation : true
 		};
 		// Take picture using device camera and retrieve image as base64-encoded string

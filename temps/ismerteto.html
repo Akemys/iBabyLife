@@ -1,22 +1,21 @@
 <style>
 	/* tutoriál css */
-	
+
 	.slider {
-		
+
 		width: 100%;
 		height: 100vh;
 	}
 	.slider img {
-		
+
 		width: 70%;
 		bottom: 0px;
 	}
-	
-	p.info{
+
+	p.info {
 		text-align: center;
 	}
-	
-	
+
 	.arrow {
 		color: black;
 		font-size: 40px;
@@ -44,22 +43,15 @@
 </ion-header-bar>
 <ion-content>
 
-	
+	<div style="text-align: center;margin-top: 2%">
+		<img ng-src="{{slide.src}}" style="width: 75%;" />
+		<p class="info">
+			{{slide.msg}}
+		</p>
 
-		<ion-slide-box  on-slide-changed="slideChanged(index)"
-		show-pager="false" >
-			<ion-slide ng-repeat="oImage in aImages">
-				<img ng-src="{{oImage.src}}" class="fullscreen-image" />
-				<p class="info">
-					{{oImage.msg}}
-				</p>
+	</div>
 
-			</ion-slide>
-		</ion-slide-box>
-		
-		
-		<i  ng-click="previous()" ng-if="slideIndex > 1" class="arrow arrowl ion-arrow-left-c"></i>
-		<i  ng-click="next()" ng-if="slideIndex < aImages.length" class="arrow arrowr ion-arrow-right-c"></i>
-	
+	<button  ng-if="slideIndex > 1" style="border: none" ng-click="previous()" class="arrow arrowl ion-arrow-left-c transparent"><i   ></i></button>
+	<button ng-if="slideIndex < aImages.length-1" style="border: none" ng-click="next()" class="arrow arrowr ion-arrow-right-c transparent"><i    ></i></button>
 
 </ion-content>
