@@ -523,20 +523,14 @@ angular.module('starter', ['ionic'])
 				type : 'button-pink',
 				onTap : function(e) {
 
-					window.cookies.clear(function() {
-					    alert('Cookies cleared!');
+					window.cookies.clear(function() {					    
 					});
-
 					window.localStorage.clear();
 					$rootScope.userStatus = false;
 					$rootScope.user = null;
 					$rootScope.network = false;
 					$state.go('login');
-				/*
-					hello('google').logout();
-					hello('facebook').logout();					
-					
-					*/
+				
 				}
 			}]
 		});
