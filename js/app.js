@@ -72,6 +72,11 @@ angular.module('starter', ['ionic'])
       templateUrl: 'temps/filter.html',
       controller: 'filterCtrl'
     })
+    .state('ismerteto', {
+      url: '/ismerteto',
+      templateUrl: 'temps/ismerteto.html',
+      controller: 'ismertetoCtrl'
+    })
 	.state('upload', {
       url: '/upload',
       templateUrl: 'temps/upload.html',
@@ -327,66 +332,6 @@ angular.module('starter', ['ionic'])
 	}
 	
 	
-	//tutorial model kezdete
-
-	
-
-		$scope.aImages = [{
-			'src' : 'tutorial/kep1.png',
-			'msg' : 'A jobb felső sarokban lévő fogaskerekek megnyomásával érheted el a főbb beállitási pontokat.'
-		}, {
-			'src' : 'tutorial/kep1_1_1.png',
-			'msg' : 'A bal felső sarokba lévő ikon azt jelzi, hogy van olyan esemény tárolva a telefonon, amit nem sikerült feltöltened.'
-		},		 {
-			'src' : 'tutorial/kep1_1_2.png',
-			'msg' : 'Az adott eseményre kattintva, egy gombnyomással feltöltheted azt.'
-		}, {
-			'src' : 'tutorial/kep1_1.png',
-			'msg' : 'A kamera gomb megnyomásával egyből készítheted a képeket a gyermeked albumába.'
-		}, {
-			'src' : 'tutorial/kep1_2.png',
-			'msg' : 'A "segíts" gombot megnyomva egy kis szövegdoboz ugrik fel, ahol az alkalmazással kapcsolatos észrevételeidet oszthatod meg velünk.'
-		}, {
-			'src' : 'tutorial/kep1_3.png',
-			'msg' : 'A "saját albumok" cím alatt az általad létrehozott albumok találhatóak. Melyekre kattintva az adott album teljes tartalmát meg tudod tekinteni.'
-		}, {
-			'src' : 'tutorial/kep1_4.png',
-			'msg' : 'A "családi albumok"  cím alatt a mások által létrehozott, de veled megosztott albumok találhatóak. Melyekre kattintva az adott album teljes tartalmát meg tudod tekinteni.'
-		}, {
-			'src' : 'tutorial/kep2.png',
-			'msg' : 'Az első pontban a saját neved és email címed látod. Ezekkel tudod azonosítani magad az alkalmazás számára.'
-		}, {
-			'src' : 'tutorial/kep3.png',
-			'msg' : 'A második pontban új albumot hozhatsz létre gyermeked számára.'
-		}, {
-			'src' : 'tutorial/kep4.png',
-			'msg' : 'A harmadik pontban, egy már meglévő album képeiből készíthetsz fotóalbumot pár gombnyomással.'
-		}, {
-			'src' : 'tutorial/kep7.png',
-			'msg' : 'A negyedik pontban értékelni tudod az iBabyLife alkalmazást.'
-		},  {
-			'src' : 'tutorial/kep8.png',
-			'msg' : 'A ötödik pontban el tudod küldeni az alkalmazást email-ben egy kedves ismerősödek/barátodak.'
-		}, {
-			'src' : 'tutorial/kep9.png',
-			'msg' : 'A hatodik pontban meg tudod osztani az iBabyLife hivatalos oldalát facebook-on.'
-		},   {
-			'src' : 'tutorial/kep5.png',
-			'msg' : 'A hetedik pontban a jelenleg futó súgó ablakot tudod újra előhívni.'
-		}, {
-			'src' : 'tutorial/kep6.png',
-			'msg' : 'Az nyolcadik pontban be tudod állítani, hogy az elkészült képek mentésre kerüljenek a készülékeden is.'
-		}];
-
-		$ionicModal.fromTemplateUrl('image-modal.html', {
-			scope : $scope,
-			animation: 'slide-in-up',
-   		    focusFirstInput: true
-		}).then(function(modal) {
-			$scope.modal = modal;
-			$scope.slideIndex = 1;
-
-
 			
 		if (localStorage.getItem("ujvagyok") === null) {
 			window.localStorage.setItem("ujvagyok", 1);
@@ -399,7 +344,7 @@ angular.module('starter', ['ionic'])
 
 					onTap : function(e) {
 
-						$scope.openModal();
+						$scope.ismerteto();
 
 					}
 				}, {
@@ -408,63 +353,13 @@ angular.module('starter', ['ionic'])
 				}]
 			});
 
-		}
+		};
 
-
-		});
 
 		
-		$scope.openModal = function() {
-	
-			$ionicLoading.show({
-				template : '<i class="icon ion-looping"></i> Információk betöltése..'
-			});
-			$timeout(function() {
-				$ionicLoading.hide();
-				$scope.modal.show();
-				// Important: This line is needed to update the current ion-slide's width
-				// Try commenting this line, click the button and see what happens
-	
-				$ionicSlideBoxDelegate.update();
-	
-			}, 1500);
-	
-		}; 
 
+		
 
-		$scope.closeModal = function() {
-			$scope.modal.hide();
-		};
-
-		// Cleanup the modal when we're done with it!
-		$scope.$on('$destroy', function() {
-			$scope.modal.remove();
-		});
-		// Execute action on hide modal
-		$scope.$on('modal.hide', function() {
-			// Execute action
-		});
-		// Execute action on remove modal
-		$scope.$on('modal.removed', function() {
-			// Execute action
-		});
-		$scope.$on('modal.shown', function() {
-			console.log('Modal is shown!');
-		});
-
-		// Call this functions if you need to manually control the slides
-		$scope.next = function() {
-			$ionicSlideBoxDelegate.next();
-		};
-
-		$scope.previous = function() {
-			$ionicSlideBoxDelegate.previous();
-		};
-
-		// Called each time the slide changes
-		$scope.slideChanged = function(index) {
-			$scope.slideIndex = index + 1;
-		};
 
 
 
@@ -490,7 +385,7 @@ angular.module('starter', ['ionic'])
 
 	};
 
-   
+
 	gaPlugin = window.plugins.gaPlugin;
 	gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-56764945-1", 10);
 
@@ -509,7 +404,9 @@ angular.module('starter', ['ionic'])
 	cordova.plugins.notification.badge.configure({ smallIcon: 'icon' });	
 
 
-	
+	$scope.ismerteto = function(){
+		$state.go('ismerteto');
+	};
 	
 	$scope.logout = function() {
 		var myPopup = $ionicPopup.show({
@@ -1327,6 +1224,84 @@ angular.module('starter', ['ionic'])
 	
 	
 	
+    
+}])
+
+
+.controller('ismertetoCtrl', ['$scope','$rootScope','$ionicSlideBoxDelegate','$ionicPopup','$ionicPlatform','$timeout', '$state','$ionicLoading', 'userService',
+					  function($scope, $rootScope,  $ionicSlideBoxDelegate ,$ionicPopup,$ionicPlatform ,$timeout, $state,$ionicLoading, userService) {
+		
+	
+	$scope.back = function() {
+		$state.go('home');
+	};
+	$ionicPlatform.registerBackButtonAction(function() {
+		$state.go('home');
+	}, 100);
+
+	// Call this functions if you need to manually control the slides
+	$scope.slideIndex = 1; 
+	
+	$scope.next = function() {
+		$ionicSlideBoxDelegate.next();
+	};
+
+	$scope.previous = function() {
+		$ionicSlideBoxDelegate.previous();
+	};
+
+	// Called each time the slide changes
+	$scope.slideChanged = function(index) {
+		$scope.slideIndex = index + 1;
+	};
+  
+	$scope.aImages = [{
+		'src' : 'tutorial/kep1.png',
+		'msg' : 'A jobb felső sarokban lévő fogaskerekek megnyomásával érheted el a főbb beállitási pontokat.'
+	}, {
+		'src' : 'tutorial/kep1_1_1.png',
+		'msg' : 'A bal felső sarokba lévő ikon azt jelzi, hogy van olyan esemény tárolva a telefonon, amit nem sikerült feltöltened.'
+	}, {
+		'src' : 'tutorial/kep1_1_2.png',
+		'msg' : 'Az adott eseményre kattintva, egy gombnyomással feltöltheted azt.'
+	}, {
+		'src' : 'tutorial/kep1_1.png',
+		'msg' : 'A kamera gomb megnyomásával egyből készítheted a képeket a gyermeked albumába.'
+	}, {
+		'src' : 'tutorial/kep1_2.png',
+		'msg' : 'A "segíts" gombot megnyomva egy kis szövegdoboz ugrik fel, ahol az alkalmazással kapcsolatos észrevételeidet oszthatod meg velünk.'
+	}, {
+		'src' : 'tutorial/kep1_3.png',
+		'msg' : 'A "saját albumok" cím alatt az általad létrehozott albumok találhatóak. Melyekre kattintva az adott album teljes tartalmát meg tudod tekinteni.'
+	}, {
+		'src' : 'tutorial/kep1_4.png',
+		'msg' : 'A "családi albumok"  cím alatt a mások által létrehozott, de veled megosztott albumok találhatóak. Melyekre kattintva az adott album teljes tartalmát meg tudod tekinteni.'
+	}, {
+		'src' : 'tutorial/kep2.png',
+		'msg' : 'Az első pontban a saját neved és email címed látod. Ezekkel tudod azonosítani magad az alkalmazás számára.'
+	}, {
+		'src' : 'tutorial/kep3.png',
+		'msg' : 'A második pontban új albumot hozhatsz létre gyermeked számára.'
+	}, {
+		'src' : 'tutorial/kep4.png',
+		'msg' : 'A harmadik pontban, egy már meglévő album képeiből készíthetsz fotóalbumot pár gombnyomással.'
+	}, {
+		'src' : 'tutorial/kep7.png',
+		'msg' : 'A negyedik pontban értékelni tudod az iBabyLife alkalmazást.'
+	}, {
+		'src' : 'tutorial/kep8.png',
+		'msg' : 'A ötödik pontban el tudod küldeni az alkalmazást email-ben egy kedves ismerősödek/barátodak.'
+	}, {
+		'src' : 'tutorial/kep9.png',
+		'msg' : 'A hatodik pontban meg tudod osztani az iBabyLife hivatalos oldalát facebook-on.'
+	}, {
+		'src' : 'tutorial/kep5.png',
+		'msg' : 'A hetedik pontban a jelenleg futó súgó ablakot tudod újra előhívni.'
+	}, {
+		'src' : 'tutorial/kep6.png',
+		'msg' : 'Az nyolcadik pontban be tudod állítani, hogy az elkészült képek mentésre kerüljenek a készülékeden is.'
+	}];
+
     
 }])
 .controller('albumlineCtrl', ['$scope', '$rootScope','$ionicLoading','$ionicActionSheet','$ionicScrollDelegate', '$ionicPopup','$ionicPlatform','$ionicScrollDelegate', '$state', '$http', '$ionicModal', '$ionicSlideBoxDelegate', 'userService',
