@@ -642,7 +642,7 @@ angular.module('starter', ['ionic'])
 	
 	$scope.shareApp = function() {
 		if (checkConnection()) {
-			window.plugins.socialsharing.share(null, null, null, 'https://play.google.com/store/apps/details?id=com.fwstudio.iBabyLife');
+			window.plugins.socialsharing.share(null, null, null, 'https://www.google.hu/');
 			/*
 			var myPopup = $ionicPopup.show({
 				title : 'iBabyLife küldése emailben',
@@ -1413,6 +1413,16 @@ function($scope, $rootScope,$ionicLoading,$ionicActionSheet,$ionicScrollDelegate
 				
 					window.plugins.socialsharing.shareViaFacebook(null, kepek, null, function() {
 						$ionicLoading.hide();
+						
+						var myPopup = $ionicPopup.show({
+							title : 'Sikeres megosztás',
+							template : 'Ezt az eseményt sikeresen megosztottad a facebook idővonaladon !',
+							buttons : [{
+								text : '<b>Rendben</b>',
+								type : 'button-pink'
+							}]
+						}); 
+
 					}, function(errormsg) {
 						$ionicLoading.hide();
 					}); 
