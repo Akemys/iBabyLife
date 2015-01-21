@@ -2235,19 +2235,13 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 				kepek.push('http://mobileapps.fekiwebstudio.hu/ibabylife/' + entry);
 			});
 
+			
 			window.plugins.socialsharing.shareViaFacebook(null, kepek, null, function() {
-				$ionicLoading.hide();
-				var myPopup = $ionicPopup.show({
-				title : 'Sikeres megosztás',
-				template : 'Ezt az eseményt sikeresen megosztottad a facebook idővonaladon !',
-				buttons : [{
-					text : '<b>Rendben</b>',
-					type : 'button-pink'
-				}]
-			});
+				$ionicLoading.hide();				
 			}, function(errormsg) {
 				$ionicLoading.hide();
-			});
+			}); 
+
 		} else {
 			var myPopup = $ionicPopup.show({
 				template : $rootScope.loc.connectFailText,
