@@ -642,41 +642,18 @@ angular.module('starter', ['ionic'])
 	
 	$scope.shareApp = function() {
 		if (checkConnection()) {
-			window.plugins.socialsharing.share(null, null, null, 'https://www.google.hu/');
-			/*
+			window.plugins.socialsharing.share(null, null, null, 'https://play.google.com/store/apps/details?id=com.fwstudio.iBabyLife');
+			
+			
 			var myPopup = $ionicPopup.show({
-				title : 'iBabyLife küldése emailben',
-				template : 'Add meg kedves ismerősöd/barátod email címét! <input type="email" ng-model="data.email">',
-				scope : $scope,
+				title : 'iBabyLife elküldve',
+				template : 'Köszönjük, hogy elküldted az iBabyLife alkalmazást ismerősödnek/barátodnak!',
 				buttons : [{
-					text : '<b>Küldés</b>',
-					type : 'button-pink',
-					onTap : function(e) {
-						if (!$scope.data.email) {
-							e.preventDefault();
-						} else {
-							$http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/sendApp.php', {
-								kitolemail : $scope.user.email,
-								kitolname : $scope.user.name,
-								kinek : $scope.data.email
-							}).success(function(data, status, headers, config) {
-								var myPopup = $ionicPopup.show({
-									title : 'Email elküldve',
-									template : 'Köszönjük, hogy elküldted az iBabyLife alkalmazást ismerősödnek/barátodnak!',
-									buttons : [{
-										text : '<b>Rendben</b>',
-										type : 'button-pink'
-									}]
-								});
-							});
-						}
-					}
-				}, {
-					text : '<b>Mégsem</b>',
-					type : 'button-light',
+					text : '<b>Rendben</b>',
+					type : 'button-pink'
 				}]
-			});
-			*/
+			}); 
+
 		} else {
 			var myPopup = $ionicPopup.show({
 				template : $rootScope.loc.connectFailText,
