@@ -726,6 +726,7 @@ angular.module('starter', ['ionic'])
 			          	  $scope.feedbackData.deviceModel = device.model;
 			          	  $scope.feedbackData.devicePlatform = device.platform;
 			          	  $scope.feedbackData.deviceVersion = device.version;
+			          	  $scope.feedbackData.email = $rootScope.user.email;
 			          	  
 			          	  
 			          	  
