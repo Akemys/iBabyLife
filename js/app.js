@@ -403,7 +403,6 @@ angular.module('starter', ['ionic'])
 	cordova.plugins.notification.badge.configure({ title: '%d feltöltetlen esemény' });
 	cordova.plugins.notification.badge.configure({ smallIcon: 'icon' });	
 
-
 	$scope.ismerteto = function(){
 		$state.go('ismerteto');
 	};
@@ -646,7 +645,7 @@ angular.module('starter', ['ionic'])
 			
 			
 			var myalbums = data;
-			
+		
 						
 			if (( typeof myalbums === 'object')) {
 				console.log(myalbums);
@@ -654,14 +653,16 @@ angular.module('starter', ['ionic'])
 				for (myalbum in myalbums) {					
 					var e = myalbums[myalbum];
 					var result = $.grep($scope.albums, function(e) {
-						return e.albumName == myalbums[myalbum].albumName;
+						return e.albumName+e.albumOwner == myalbums[myalbum].albumName+myalbums[myalbum].albumOwner;
 					});
-				
+					
 					if (result.length == 0) {
+						console.log('új album '+e.albumName);
 						dao.newAlbum(myalbums[myalbum], function() {
 						});
 						$scope.albums.push(myalbums[myalbum]);						
 					} else if (result.length == 1) {
+						console.log('van ien album már '+e.albumName);
 					}
 
 				}
@@ -727,6 +728,7 @@ angular.module('starter', ['ionic'])
 			          	  $scope.feedbackData.devicePlatform = device.platform;
 			          	  $scope.feedbackData.deviceVersion = device.version;
 			          	  $scope.feedbackData.email = $rootScope.user.email;
+			          	  $scope.feedbackData.name = $rootScope.user.name;
 			          	  
 			          	  
 			          	  
