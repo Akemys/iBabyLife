@@ -2750,16 +2750,16 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 	
 			alert('itt valami be van jelentkezve')
 			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-		alert('itt bevan jelentkezve de nincs net')	
-					
-				$ionicLoading.hide();
-				var myPopup = $ionicPopup.show({					
-				    template: 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
-				    title: $rootScope.loc.loginFailTitle,
-				    buttons: [
-				      { text: '<b>Rendben</b>',	      
-				        type: 'button-light',				       
-						onTap: function(e) {
+		alert('itt bevan jelentkezve de nincs net')						
+				
+				
+				var myPopup = $ionicPopup.show({
+					template : 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
+					title : $rootScope.loc.loginFailTitle,
+					buttons : [{
+						text : '<b>Rendben</b>',
+						type : 'button-light',
+						onTap : function(e) {
 							if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
 								$rootScope.user = {
@@ -2780,11 +2780,9 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 							}
 
 						}
+					}]
+				}); 
 
-
-				      }
-				    ]
-				  });
 				
 			} else {
 				alert('ittbevan jelentkezve és van net')
