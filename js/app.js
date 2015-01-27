@@ -2705,10 +2705,7 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 
 	
 	var online = function(session) {
-		var current_time = (new Date()).getTime() / 1000;
-		
-		alert('eznemtudommi');
-		
+		var current_time = (new Date()).getTime() / 1000;		
 		return session && session.access_token && session.expires > current_time;
 		
 	};
