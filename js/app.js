@@ -2672,13 +2672,13 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 	$ionicLoading.show({
 		template : 'Bejelentkezés..'
 	});	
-	alert('sztem itt kezdődik')
+
 	
 	 	 
 	document.addEventListener("deviceready", onDeviceReady, false);
 	// device APIs are available
 	function onDeviceReady() {
-	 alert('itt betölt a telefon')
+	
 	 
 
 		
@@ -2748,11 +2748,10 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 		
 		if ((online(facebookonline) || online(googleonline) || online(twitteronline) || loginIBabyLife())) {
 	
-			alert('itt valami be van jelentkezve')
+			
 			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-		alert('itt bevan jelentkezve de nincs net')						
-				
-				
+						
+							
 			
 				if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
@@ -2789,7 +2788,7 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 */
 				
 			} else {
-				alert('ittbevan jelentkezve és van net')
+				
 				if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
 					$rootScope.user = {
@@ -2812,7 +2811,7 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 			}
 	
 		} else {
-		alert('itt nnincs bejelentkezve senki')
+	
 			$ionicLoading.hide();
 		}
 	

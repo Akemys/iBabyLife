@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
 xmlns:gap = "http://phonegap.com/ns/1.0"
 id        = "com.fwstudio.iBabyLife"
-version   = "1.0.3">
+version   = "1.0.4">
 
 	<name>iBabyLife</name>
 	<description>Lukácsi Szilárd</description>
@@ -23,9 +23,7 @@ version   = "1.0.3">
 	<preference name="orientation"                value="portrait"  />
 	<!-- all: default means both landscape and portrait are enabled -->
 	<preference name="target-device"              value="universal" />
-	<!-- all: possible values handset, tablet, or universal -->
-	<preference name="fullscreen"                 value="true" />
-	<!-- all: hides the status bar at the top of the screen -->
+	<!-- all: possible values handset, tablet, or universal -->	
 	<preference name="webviewbounce"              value="true" />
 	<!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
 	<preference name="prerendered-icon"           value="true" />
@@ -48,6 +46,9 @@ version   = "1.0.3">
 	<!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
 	<preference name="android-installLocation"    value="auto" />
 	<!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
+
+	<preference name="fullscreen" value="false" />
+	 <preference name="android-windowSoftInputMode" value="stateVisible" /> 
 
 	<!-- Plugins -->
 	<feature name="http://api.phonegap.com/1.0/file" />
