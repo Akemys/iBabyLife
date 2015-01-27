@@ -2670,7 +2670,10 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 
 .controller('loginCtrl', ['$scope','$rootScope','$ionicPopup','$ionicPlatform','$state','$ionicLoading', 'userService', function($scope, $rootScope, $ionicPopup,$ionicPlatform, $state,$ionicLoading, userService) {
 	  	 
-	  	 
+	 	document.addEventListener("deviceready", onDeviceReady, false);
+	// device APIs are available
+	function onDeviceReady() {
+	 	 
 	
 	$ionicLoading.show({
 		template : 'Bejelentkezés..'
@@ -2713,122 +2716,132 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 	var facebookonline = hello("facebook").getAuthResponse();
 	var googleonline = hello("google").getAuthResponse();
 	var twitteronline = hello("twitter").getAuthResponse();
-
 	
-	var networkState = navigator.network.connection.type;
+	
+	
+	
+ 
+	
 
-	var states = {};
-	states[Connection.UNKNOWN] = 'Unknown connection';
-	states[Connection.ETHERNET] = 'Ethernet connection';
-	states[Connection.WIFI] = 'WiFi connection';
-	states[Connection.CELL_2G] = 'Cell 2G connection';
-	states[Connection.CELL_3G] = 'Cell 3G connection';
-	states[Connection.CELL_4G] = 'Cell 4G connection';
-	states[Connection.NONE] = 'No network connection';
+		
+		
+		var networkState = navigator.network.connection.type;
 
-	if ((online(facebookonline) || online(googleonline) || online(twitteronline) || loginIBabyLife())) {
+		var states = {};
+		states[Connection.UNKNOWN] = 'Unknown connection';
+		states[Connection.ETHERNET] = 'Ethernet connection';
+		states[Connection.WIFI] = 'WiFi connection';
+		states[Connection.CELL_2G] = 'Cell 2G connection';
+		states[Connection.CELL_3G] = 'Cell 3G connection';
+		states[Connection.CELL_4G] = 'Cell 4G connection';
+		states[Connection.NONE] = 'No network connection';
+		
+		if ((online(facebookonline) || online(googleonline) || online(twitteronline) || loginIBabyLife())) {
+	
+			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+				$ionicLoading.hide();
+				var myPopup = $ionicPopup.show({					
+				    template: 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
+				    title: $rootScope.loc.loginFailTitle,
+				    buttons: [
+				      { text: '<b>Rendben</b>',	      
+				        type: 'button-light',				       
+						onTap: function(e) {
+							if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
-		if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
-			$ionicLoading.hide();
-			var myPopup = $ionicPopup.show({
-				template : 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
-				title : $rootScope.loc.loginFailTitle,
-				buttons : [{
-					text : '<b>Rendben</b>',
-					type : 'button-light',
-					onTap : function(e) {
-						if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
+								$rootScope.user = {
+									name : localStorage.getItem('username'),
+									email : localStorage.getItem('email')
+								};
+								$ionicLoading.hide();
+								$state.go('home');
 
-							$rootScope.user = {
-								name : localStorage.getItem('username'),
-								email : localStorage.getItem('email')
-							};
-							$ionicLoading.hide();
-							$state.go('home');
+							} else if (loginIBabyLife()) {
+								$rootScope.user = {
+									name : localStorage.getItem('ibabylifeusername'),
+									email : localStorage.getItem('ibabylifeemail')
+								};
+								$rootScope.$apply($rootScope.user);
+								$ionicLoading.hide();
+								$state.go('home');
+							}
 
-						} else if (loginIBabyLife()) {
-							$rootScope.user = {
-								name : localStorage.getItem('ibabylifeusername'),
-								email : localStorage.getItem('ibabylifeemail')
-							};
-							$rootScope.$apply($rootScope.user);
-							$ionicLoading.hide();
-							$state.go('home');
 						}
 
-					}
-				}]
-			});
 
-		} else {
+				      }
+				    ]
+				  });
+				
+			} else {
+				
+				if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
-			if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
+					$rootScope.user = {
+						name : localStorage.getItem('username'),
+						email : localStorage.getItem('email')
+					};
+					$ionicLoading.hide();
+					$state.go('home');
 
-				$rootScope.user = {
-					name : localStorage.getItem('username'),
-					email : localStorage.getItem('email')
-				};
-				$ionicLoading.hide();
-				$state.go('home');
-
-			} else if (loginIBabyLife()) {
-				$rootScope.user = {
-					name : localStorage.getItem('ibabylifeusername'),
-					email : localStorage.getItem('ibabylifeemail')
-				};
-				$rootScope.$apply($rootScope.user);
-				$ionicLoading.hide();
-				$state.go('home');
+				} else if (loginIBabyLife()) {
+					$rootScope.user = {
+						name : localStorage.getItem('ibabylifeusername'),
+						email : localStorage.getItem('ibabylifeemail')
+					};
+					$rootScope.$apply($rootScope.user);
+					$ionicLoading.hide();
+					$state.go('home');
+				}
+		
 			}
-
-		}
-
-	} else {
-		$ionicLoading.hide();
-	}
-
 	
-
-  $scope.loginFacebook = userService.loginFacebook;
-  $scope.loginGoogle = userService.loginGoogle;
-  $scope.loginTwitter = userService.loginTwitter;
-  
-  $scope.loginIbabyLife = function() {
-	 if(checkConnection()){	 
-		  var myPopup = $ionicPopup.show({
-		    template: $rootScope.loc.ibabylifeloginpopupText,
-		    title: 'IBabyLife belépés',
-		    buttons: [
-		      { text: '<b>Még nem</b>',	      
-		        type: 'button-light',
-		        onTap: function(e) {
-		          $state.go('signup');
-		        }
-		      },
-		      {
-		        text: '<b>Igen</b>',
-		        type: 'button-pink',
-		        onTap: function(e) {
-		          $state.go('signin');
-		        }
-		      },
-		    ]
-		  });
-	  }else{
-      	  var myPopup = $ionicPopup.show({
-			    template: $rootScope.loc.loginFailText,
-			    title: $rootScope.loc.loginFailTitle,
+		} else {
+			$ionicLoading.hide();
+		}
+	
+	  $scope.loginFacebook = userService.loginFacebook;
+	  $scope.loginGoogle = userService.loginGoogle;
+	  $scope.loginTwitter = userService.loginTwitter;
+	  
+	  $scope.loginIbabyLife = function() {
+		 if(checkConnection()){	 
+			  var myPopup = $ionicPopup.show({
+			    template: $rootScope.loc.ibabylifeloginpopupText,
+			    title: 'IBabyLife belépés',
 			    buttons: [
+			      { text: '<b>Még nem</b>',	      
+			        type: 'button-light',
+			        onTap: function(e) {
+			          $state.go('signup');
+			        }
+			      },
 			      {
-			        text: '<b>Rendben</b>',
+			        text: '<b>Igen</b>',
 			        type: 'button-pink',
 			        onTap: function(e) {
+			          $state.go('signin');
 			        }
 			      },
 			    ]
 			  });
-      }
+		  }else{
+	      	  var myPopup = $ionicPopup.show({
+				    template: $rootScope.loc.loginFailText,
+				    title: $rootScope.loc.loginFailTitle,
+				    buttons: [
+				      {
+				        text: '<b>Rendben</b>',
+				        type: 'button-pink',
+				        onTap: function(e) {
+				        }
+				      },
+				    ]
+				  });
+	      }
+		
+		  
 	
-	  
+	  };
   };
 }]);
