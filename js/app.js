@@ -2753,6 +2753,27 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 		alert('itt bevan jelentkezve de nincs net')						
 				
 				
+			
+				if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
+
+					$rootScope.user = {
+						name : localStorage.getItem('username'),
+						email : localStorage.getItem('email')
+					};
+					$ionicLoading.hide();
+					$state.go('home');
+
+				} else if (loginIBabyLife()) {
+					$rootScope.user = {
+						name : localStorage.getItem('ibabylifeusername'),
+						email : localStorage.getItem('ibabylifeemail')
+					};
+					$rootScope.$apply($rootScope.user);
+					$ionicLoading.hide();
+					$state.go('home');
+				}
+
+				/*
 				var myPopup = $ionicPopup.show({
 					template : 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
 					title : $rootScope.loc.loginFailTitle,
@@ -2760,29 +2781,12 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 						text : '<b>Rendben</b>',
 						type : 'button-light',
 						onTap : function(e) {
-							if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
-
-								$rootScope.user = {
-									name : localStorage.getItem('username'),
-									email : localStorage.getItem('email')
-								};
-								$ionicLoading.hide();
-								$state.go('home');
-
-							} else if (loginIBabyLife()) {
-								$rootScope.user = {
-									name : localStorage.getItem('ibabylifeusername'),
-									email : localStorage.getItem('ibabylifeemail')
-								};
-								$rootScope.$apply($rootScope.user);
-								$ionicLoading.hide();
-								$state.go('home');
-							}
+							
 
 						}
 					}]
 				}); 
-
+*/
 				
 			} else {
 				alert('ittbevan jelentkezve és van net')
