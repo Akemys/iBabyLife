@@ -499,7 +499,9 @@ angular.module('starter', ['ionic'])
 							latvany : $scope.latvany,
 							hasznalhatosag : $scope.hasznalhatosag,
 							hasznossag : $scope.hasznossag,
-							user : $rootScope.user.email
+							user : $rootScope.user.email,
+							username : $rootScope.user.name
+						
 						}).success(function(data, status, headers, config) {
 							var myPopup = $ionicPopup.show({
 								title : $rootScope.loc.ertekelesKuldvePopupTitle,
