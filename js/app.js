@@ -2669,15 +2669,21 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 
 
 .controller('loginCtrl', ['$scope','$rootScope','$ionicPopup','$ionicPlatform','$state','$ionicLoading', 'userService', function($scope, $rootScope, $ionicPopup,$ionicPlatform, $state,$ionicLoading, userService) {
-	  	 
-	 	document.addEventListener("deviceready", onDeviceReady, false);
-	// device APIs are available
-	function onDeviceReady() {
-	 	 
-	
 	$ionicLoading.show({
 		template : 'Bejelentkezés..'
-	});	 
+	});	
+	alert('sztem itt kezdődik')
+	
+	 	 
+	document.addEventListener("deviceready", onDeviceReady, false);
+	// device APIs are available
+	function onDeviceReady() {
+	 alert('itt betölt a telefon')
+	 
+
+		
+	
+	 
 	 
 	$ionicPlatform.registerBackButtonAction(function () {	 
 	    var myPopup = $ionicPopup.show({		   
@@ -2700,7 +2706,11 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 	
 	var online = function(session) {
 		var current_time = (new Date()).getTime() / 1000;
+		
+		alert('eznemtudommi');
+		
 		return session && session.access_token && session.expires > current_time;
+		
 	};
 
 	
@@ -2738,7 +2748,10 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 		
 		if ((online(facebookonline) || online(googleonline) || online(twitteronline) || loginIBabyLife())) {
 	
+			alert('itt valami be van jelentkezve')
 			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE) {
+		alert('itt bevan jelentkezve de nincs net')	
+					
 				$ionicLoading.hide();
 				var myPopup = $ionicPopup.show({					
 				    template: 'Mivel nincs internetkapcsolatod, csak offline módban tudsz tovább lépni. Lesznek olyan funkciók, amik ilyenkor nem használhatóak.',
@@ -2774,7 +2787,7 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 				  });
 				
 			} else {
-				
+				alert('ittbevan jelentkezve és van net')
 				if (online(facebookonline) || online(googleonline) || online(twitteronline)) {
 
 					$rootScope.user = {
@@ -2797,6 +2810,7 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 			}
 	
 		} else {
+		alert('itt nnincs bejelentkezve senki')
 			$ionicLoading.hide();
 		}
 	
