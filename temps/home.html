@@ -1,4 +1,5 @@
 <style>
+	
 	.mainMenu {
 		position: fixed;
 		width: 100%;
@@ -78,7 +79,7 @@
 
 <ion-side-menus>
 	<!-- Center content -->
-	<ion-side-menu-content edge-drag-threshold="false" drag-content="false"  >
+	<ion-side-menu-content edge-drag-threshold="false" drag-content="false" >
 		<ion-header-bar align-title="center" style="background-color: #F521A2 ">
 			<div  class="buttons" ng-if="offlineEvents.length > 0">
 				<button style="color: white" class="button button-icon icon ion-upload" ng-click="menuLeft()">
@@ -90,11 +91,11 @@
 				<button style="color: white" class="button button-icon icon ion-gear-a" ng-click="menuRight()"></button>
 			</div>
 		</ion-header-bar>
-
+	
 		<img  style="display: block;width: 100%" id="hatter" src="css/background-home.jpg" />
 
-		<div class="mainMenu">
-
+		<div class="mainMenu" >
+			
 			<p ng-if="minealbums.length>0" style="margin: auto auto;display: inline-block;height: 100%"  >
 				<div ng-if="minealbums.length>0"  style="color:  #F521A2;margin: auto auto;text-align: center">
 					Saját albumok
@@ -122,11 +123,13 @@
 					</button>
 				</ion-scroll>
 			</p>
+
 			<button style="display: inline-block;height : 10vh; width: 100%"  class="button button-block button-light icon ion-android-camera" data-ng-click="takePic()">
 				Kamera
 			</button>
 
 		</div>
+
 		<ion-footer-bar class="transparent" >
 
 			<h1 class="title"></h1>
@@ -135,30 +138,8 @@
 					Segíts
 				</button>
 			</div>
+
 		</ion-footer-bar>
-		<script id="image-modal.html" type="text/ng-template">
-
-			<div class="modal image-modal transparent" >
-
-			<i ng-click="closeModal()"  class="exit ion-close-round"></i>
-
-			<p class="nav">
-			{{slideIndex}}/{{aImages.length}}
-			</p>
-
-			<ion-slide-box  on-slide-changed="slideChanged(index)"
-			show-pager="false" >
-			<ion-slide ng-repeat="oImage in aImages">
-			<img ng-src="{{oImage.src}}" class="fullscreen-image" />
-			<p class="info">{{oImage.msg}}</p>
-
-			</ion-slide>
-			</ion-slide-box>
-			<i  ng-click="previous()" ng-if="slideIndex > 1" class="arrow arrowl ion-arrow-left-c"></i>
-			<i  ng-click="next()" ng-if="slideIndex < aImages.length" class="arrow arrowr ion-arrow-right-c"></i>
-			</div>
-
-		</script>
 
 	</ion-side-menu-content>
 

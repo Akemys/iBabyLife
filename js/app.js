@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic','ngIntercom'])
 
 
 .run(function($ionicPlatform, $rootScope, $state, userService) {
@@ -278,11 +278,47 @@ angular.module('starter', ['ionic'])
 
   return service;
 }])
+.constant('INTERCOM_APPID', "hcx81p91")
+.config(function($intercomProvider, INTERCOM_APPID) {
+	// Either include your app_id here or later on boot
+	$intercomProvider.appID(INTERCOM_APPID);
 
-.controller('homeCtrl', ['$scope','$rootScope','$timeout', '$ionicModal', '$ionicSlideBoxDelegate','$state','$ionicPopup','$ionicPlatform','$ionicSideMenuDelegate','$ionicLoading','$http','userService',function($scope, $rootScope,$timeout,$ionicModal, $ionicSlideBoxDelegate, $state,$ionicPopup,$ionicPlatform,$ionicSideMenuDelegate,$ionicLoading,$http, userService) {
+	// you can include the Intercom's script yourself or use the built in async loading feature
+	$intercomProvider.asyncLoading(true)
+})
+
+.controller('homeCtrl',function($scope, $rootScope,$intercom, $timeout,$ionicModal, $ionicSlideBoxDelegate, $state,$ionicPopup,$ionicPlatform,$ionicSideMenuDelegate,$ionicLoading,$http, userService) {
     
     
     $scope.data = {};  
+    
+    /* csak tesztelésre
+    $rootScope.user = {};
+    $rootScope.user.email = 'kissbela@gmail.com';
+    $rootScope.user.name = 'Kiss Béla';
+	*/
+
+	$scope.intercomUser = {
+		email : $rootScope.user.email,
+		name : $rootScope.user.name,
+		created_at : 1234567890
+	}; 
+
+	$intercom.boot($scope.intercomUser);
+
+
+	Object.size = function(obj) {
+		var size = 0,
+		    key;
+		for (key in obj) {
+			if (obj.hasOwnProperty(key))
+				size++;
+		}
+		return size;
+	}; 
+
+
+   
 
    	$ionicPlatform.registerBackButtonAction(function () {
    		var myPopup = $ionicPopup.show({		   
@@ -319,6 +355,14 @@ angular.module('starter', ['ionic'])
 			    ]
 			});	 
    };
+
+	// intercom feedback cucc	
+
+
+
+
+
+
 
 	if (localStorage.getItem("saveImages") === null) {
 		window.localStorage.setItem("saveImages", 1 );
@@ -1076,7 +1120,7 @@ angular.module('starter', ['ionic'])
 	}; 
 
 
-}])
+})
 
 .controller('filterCtrl', ['$scope','$rootScope','$ionicPopup','$ionicPlatform','$timeout', '$state','$ionicLoading', 'userService',function($scope, $rootScope,$ionicPopup,$ionicPlatform ,$timeout, $state,$ionicLoading, userService) {
 	
