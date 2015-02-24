@@ -522,9 +522,9 @@ angular.module('starter', ['ionic','ngIntercom'])
 				
 				title : $rootScope.loc.ertekelesKervePopupTitle,
 				template : '<div>Kérlek, segítsd munkánkat értékeléseddel! 1-5-ig pontozd a szempontokat érintéssel, majd kattints a Küldés gombra!</div> </br>'+
-						   '<table><tr><td>{{loc.ertekelesLatvany}} : </td><td><div ng-click="setLatvany($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(latvany,$index+1)" class="circleBase">{{$index+1}}</td> </tr>' +
-						   '<tr><td>{{loc.ertekelesHasznal}} : </td><td><div ng-click="setHasznalhatosag($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(hasznalhatosag,$index+1)" class="circleBase">{{$index+1}}</td> </tr>' +
-						   '<tr><td>{{loc.ertekelesHasznos}} : </td><td><div ng-click="setHasznossag($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(hasznossag,$index+1)" class="circleBase">{{$index+1}}</td></tr></table>',
+						   '<table><tr><td>{{loc.ertekelesLatvany}} : </td><td><div style="margin-right:4px" ng-click="setLatvany($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(latvany,$index+1)" class="circleBase">{{$index+1}}</td> </tr>' +
+						   '<tr><td>{{loc.ertekelesHasznal}} : </td><td><div style="margin-right:4px" ng-click="setHasznalhatosag($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(hasznalhatosag,$index+1)" class="circleBase">{{$index+1}}</td> </tr>' +
+						   '<tr><td>{{loc.ertekelesHasznos}} : </td><td><div style="margin-right:4px" ng-click="setHasznossag($index)"  ng-repeat="i in getNumber(5) track by $index" ng-class="whatClassIsIt(hasznossag,$index+1)" class="circleBase">{{$index+1}}</td></tr></table>',
 				scope : $scope,
 				buttons : [{
 					text : '<b>Küldés</b>',
