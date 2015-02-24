@@ -97,6 +97,11 @@ angular.module('starter', ['ionic','ngIntercom'])
       templateUrl: 'temps/timeline.html',
       controller: 'timelineCtrl'
     })
+     .state('milestone', {
+      url: '/milestone',
+      templateUrl: 'temps/milestone.html',
+      controller: 'milestoneCtrl'
+    })
      .state('newAlbum', {
       url: '/newAlbum',
       templateUrl: 'temps/newAlbum.html',
@@ -168,6 +173,7 @@ angular.module('starter', ['ionic','ngIntercom'])
 						$rootScope.network = 'facebook';
 						window.localStorage.setItem("username", $rootScope.user.name);
 						window.localStorage.setItem("email", $rootScope.user.email);
+						$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Beregisztrált : Facebook", new Date().toString() , 1);
 						$state.go('home');
 					});
 				});
@@ -209,6 +215,7 @@ angular.module('starter', ['ionic','ngIntercom'])
 	          $rootScope.network = 'google';
 	          window.localStorage.setItem("username", $rootScope.user.name );
 			  window.localStorage.setItem("email",  $rootScope.user.email);	    
+	          $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Beregisztrált : Google", new Date().toString() , 1);
 	          $state.go('home');
 	        });
 	      });
@@ -278,34 +285,21 @@ angular.module('starter', ['ionic','ngIntercom'])
 
   return service;
 }])
-.constant('INTERCOM_APPID', "hcx81p91")
-.config(function($intercomProvider, INTERCOM_APPID) {
-	// Either include your app_id here or later on boot
-	$intercomProvider.appID(INTERCOM_APPID);
 
-	// you can include the Intercom's script yourself or use the built in async loading feature
-	$intercomProvider.asyncLoading(true)
-})
 
 .controller('homeCtrl',function($scope, $rootScope,$intercom, $timeout,$ionicModal, $ionicSlideBoxDelegate, $state,$ionicPopup,$ionicPlatform,$ionicSideMenuDelegate,$ionicLoading,$http, userService) {
     
     
     $scope.data = {};  
     
-    /* csak tesztelésre
+   /* teszt user
     $rootScope.user = {};
     $rootScope.user.email = 'kissbela@gmail.com';
     $rootScope.user.name = 'Kiss Béla';
 	*/
 
-	$scope.intercomUser = {
-		email : $rootScope.user.email,
-		name : $rootScope.user.name,
-		created_at : 1234567890
-	}; 
-
-	$intercom.boot($scope.intercomUser);
-
+	
+ 
 
 	Object.size = function(obj) {
 		var size = 0,
@@ -359,6 +353,13 @@ angular.module('starter', ['ionic','ngIntercom'])
 	// intercom feedback cucc	
 
 
+
+
+	$scope.milestones = function() {		
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Belép a mérföldkövekbe : ", new Date().toString() , 1);
+			$state.go('milestone');
+	
+	}; 
 
 
 
@@ -423,30 +424,21 @@ angular.module('starter', ['ionic','ngIntercom'])
 		
 		if (saveImages) {
 			window.localStorage.setItem("saveImages", 1);
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Képek mentése telóra : igen", new Date().toString() , 1);	
 		} else {
 			window.localStorage.setItem("saveImages", 0);
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Képek mentése telóra : nem", new Date().toString() , 1);	
 		}
 
 	};
 
 
-	gaPlugin = window.plugins.gaPlugin;
-	gaPlugin.init(nativePluginResultHandler, nativePluginErrorHandler, "UA-56764945-1", 10);
-
-	function nativePluginResultHandler(result) {
-		//alert('nativePluginResultHandler - '+result);
-		console.log('nativePluginResultHandler: ' + result);
-	}
-
-	function nativePluginErrorHandler(error) {
-		//alert('nativePluginErrorHandler - '+error);
-		console.log('nativePluginErrorHandler: ' + error);
-	}
 
 
+/*
 	cordova.plugins.notification.badge.configure({ title: '%d feltöltetlen esemény' });
 	cordova.plugins.notification.badge.configure({ smallIcon: 'icon' });	
-
+*/
 	$scope.ismerteto = function(){
 		$state.go('ismerteto');
 	};
@@ -462,7 +454,7 @@ angular.module('starter', ['ionic','ngIntercom'])
 				text : '<b>Igen</b>',
 				type : 'button-pink',
 				onTap : function(e) {
-
+					$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Kijelentkezik", new Date().toString() , 1);	
 					window.cookies.clear(function() {					    
 					});
 					window.localStorage.clear();
@@ -538,7 +530,8 @@ angular.module('starter', ['ionic','ngIntercom'])
 					text : '<b>Küldés</b>',
 					type : 'button-pink',
 					onTap : function(e) {
-
+						$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Értékelés : látvány="+$scope.latvany+",használhatóság="+$scope.hasznalhatosag+",hasznossag"+$scope.hasznossag, new Date().toString() , 1);	
+						
 						$http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/apprate.php', {
 							latvany : $scope.latvany,
 							hasznalhatosag : $scope.hasznalhatosag,
@@ -584,6 +577,7 @@ angular.module('starter', ['ionic','ngIntercom'])
 	
 	$scope.shareApp = function() {
 		if (checkConnection()) {
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Megosztja az alkalmazást", new Date().toString() , 1);	
 			window.plugins.socialsharing.share(null, null, null, 'https://play.google.com/store/apps/details?id=com.fwstudio.iBabyLife');
 			
 		
@@ -607,6 +601,8 @@ angular.module('starter', ['ionic','ngIntercom'])
 	$scope.shareWeb = function() {
 
 		if (checkConnection()) {
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Megosztja a weboldalt", new Date().toString() , 1);	
+			
 			var appInBrowser = window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.ibabylife.com/', '_blank', 'location=yes,enableViewportScale=yes');
 
 			appInBrowser.addEventListener('loadstart', function(event) {
@@ -777,7 +773,8 @@ angular.module('starter', ['ionic','ngIntercom'])
 			          	  $scope.feedbackData.name = $rootScope.user.name;
 			          	  
 			          	  
-			          	  
+			          	  $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Visszajelzés : "+$scope.feedbackData.message, new Date().toString() , 1);	
+			          	
 				          $http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/feedback.php', $scope.feedbackData).success(function(data, status, headers, config) {			
 									
 								var myPopup = $ionicPopup.show({
@@ -1122,6 +1119,20 @@ angular.module('starter', ['ionic','ngIntercom'])
 
 })
 
+.controller('milestoneCtrl', ['$scope','$rootScope','$ionicPopup','$ionicPlatform','$timeout', '$state','$ionicLoading', 'userService',function($scope, $rootScope,$ionicPopup,$ionicPlatform ,$timeout, $state,$ionicLoading, userService) {
+	
+	$scope.back = function() {
+		$state.go('home');
+	}; 
+	$ionicPlatform.registerBackButtonAction(function () {	 
+	    $state.go('home');
+	}, 100);
+	
+	
+	
+	
+    
+}])
 .controller('filterCtrl', ['$scope','$rootScope','$ionicPopup','$ionicPlatform','$timeout', '$state','$ionicLoading', 'userService',function($scope, $rootScope,$ionicPopup,$ionicPlatform ,$timeout, $state,$ionicLoading, userService) {
 	
 	$scope.filter = '';
@@ -1175,6 +1186,10 @@ angular.module('starter', ['ionic','ngIntercom'])
 		
 
 		ApplyEffects[filterButton.id](originalPhoto, 'wepb');
+		
+		$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Képre szürő : "+filterButton.id, new Date().toString() , 1);	
+		
+		
 				
 		if(document.getElementById('originalPhoto').style.display == 'block'){
 			$ionicLoading.hide();	
@@ -1284,6 +1299,8 @@ angular.module('starter', ['ionic','ngIntercom'])
 	// Call this functions if you need to manually control the slides
 	
   
+  	$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Megnézi az ismertetőt", new Date().toString() , 1);	
+	
   	
 	
 
@@ -1477,7 +1494,8 @@ function($scope, $rootScope,$ionicLoading,$ionicActionSheet,$ionicScrollDelegate
 				      $scope.shareData.albumDate = $scope.album[0].albumDate;
 				      $scope.shareData.albumSex = $scope.album[0].albumSex;
 				      
-					  
+					   $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Album megosztás : kivel="+$scope.shareData.shareemail+" mit="+$scope.shareData.albumName, new Date().toString() , 1);	
+		          	 
 		          	  	          	  
 			          $http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/share.php', $scope.shareData).success(function(data, status, headers, config) {			
 		
@@ -1780,6 +1798,10 @@ function($scope, $rootScope, $ionicPopup,$ionicPlatform, $state, $http, $ionicMo
 			    		albumSex  : $scope.data.albumSex,
 			    		albumOwner : $rootScope.user.email
 			    	};
+			    	
+			    	    	
+			    	$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Új gyermek : "+$scope.data.albumName, new Date().toString() , 1);
+			   
 			    	dao.newAlbum(album,function(){});
 			    	var myPopup = $ionicPopup.show({
 					    title: 'Az albumot sikeresen létrehoztad',
@@ -1915,7 +1937,8 @@ function($scope,$ionicLoading,$ionicActionSheet, $rootScope, $ionicPopup,$ionicP
 
 		if ($scope.data.albumFromDate != '' && $scope.data.albumToDate != '') {
 		
-		
+			$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Új fotóalbum : "+db+" darabos,", new Date().toString() , 1);	
+			
 			$http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/newPhotoAlbum.php?imagesSize='+db+'&albumName=' + $scope.fotoalbum.albumName + '&albumOwner=' + $scope.fotoalbum.albumOwner +'&albumOwnerName=' +  $rootScope.user.name + '&fromDate=' + $scope.data.albumFromDate + '&toDate=' + $scope.data.albumToDate + '').success(function(data) {
 				$ionicLoading.hide();
 				if(data['success'] == false){		
@@ -2084,7 +2107,8 @@ function($scope,$ionicLoading,$ionicActionSheet, $rootScope, $ionicPopup,$ionicP
 				          window.localStorage.setItem("ibabylifeusername", data.vezeteknev+' '+data.keresztnev);
 				          window.localStorage.setItem("ibabylifeemail", data.email);	          
 				          
-				          
+				            $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, data.vezeteknev+' '+data.keresztnev+" "+data.email, "Bejelentkezett : iBabyLife", new Date().toString() , 1);
+					 
 							console.log(data);
 							$rootScope.user =  {
 								name : data.vezeteknev+' '+data.keresztnev,
@@ -2131,6 +2155,9 @@ function($scope,$ionicLoading,$ionicActionSheet, $rootScope, $ionicPopup,$ionicP
 				$scope.errorJelszo = data.errors.jelszo;
 
 			} else {
+				$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $( "#vezeteknev" ).val()+" "+$( "#keresztnev" ).val()+" "+$( "#email" ).val(), "Beregisztrált : iBabyLife", new Date().toString() , 1);
+				
+				
 				var myPopup = $ionicPopup.show({
 				    title: 'Sikeres regisztráció',
 				    template: $rootScope.loc.ibabyliferegpopupText,
@@ -2469,6 +2496,9 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 				$scope.eventData.albumSex = $scope.album[0].albumSex;
 				$scope.eventData.saveImages = localStorage.getItem("saveImages");
 				
+				$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Új esemény : album="+$scope.eventData.albumName+", képekszáma="+$rootScope.images.length, new Date().toString() , 1);	
+
+			
 			
 				$http.post('http://mobileapps.fekiwebstudio.hu/ibabylife/newEsemeny.php', $scope.eventData).success(function(data, status, headers, config) {			
 		
@@ -2631,6 +2661,10 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 		$rootScope.album = $scope.data.album.id;
 		$rootScope.message = $scope.data.message;
 		$rootScope.milestone = $scope.data.milestone;
+		
+		$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Plusz 1 kép: ez lesz a "+($rootScope.images.length+1)+". kép",new Date().toString() , 1);	
+
+	
 	
 		var options = {
 			destinationType : Camera.DestinationType.DATA_URL,
@@ -2724,7 +2758,21 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 	document.addEventListener("deviceready", onDeviceReady, false);
 	// device APIs are available
 	function onDeviceReady() {
-	
+				$rootScope.gaPlugin;
+				
+				$rootScope.gaPlugin = window.plugins.gaPlugin;
+				
+				$rootScope.gaPlugin.init($rootScope.successHandler, $rootScope.errorHandler, "UA-56764945-1", 10);
+			
+
+				$rootScope.successHandler = function(result) {
+					//alert('nativePluginResultHandler - ' + result);
+				};
+
+				$rootScope.errorHandler = function(error) {
+					//alert('nativePluginErrorHandler - ' + error);
+				};
+			
 	 
 
 		
@@ -2840,12 +2888,20 @@ function($scope, $rootScope, $timeout, $state,$stateParams, $ionicPopup,$http,$i
 					};
 					$ionicLoading.hide();
 					$state.go('home');
+					
+					if(online(facebookonline)){
+						 $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Bejelentkezett : Facebook", new Date().toString() , 1);
+					}else if(online(googleonline)){
+						 $rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Bejelentkezett : Google", new Date().toString() , 1);
+					}
 
 				} else if (loginIBabyLife()) {
 					$rootScope.user = {
 						name : localStorage.getItem('ibabylifeusername'),
 						email : localStorage.getItem('ibabylifeemail')
 					};
+					$rootScope.gaPlugin.trackEvent( $rootScope.successHandler, $rootScope.errorHandler, $rootScope.user.name+" "+$rootScope.user.email, "Bejelentkezett : iBabyLife", new Date().toString() , 1);
+					
 					$rootScope.$apply($rootScope.user);
 					$ionicLoading.hide();
 					$state.go('home');
